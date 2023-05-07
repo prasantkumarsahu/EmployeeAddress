@@ -1,22 +1,10 @@
-<<<<<<< HEAD
-# User Management System
-
-This is a API project for insert, read, update, and delete User.
-=======
-# Job Management System
-This is a API project for insert, read, update, and delete Jobs using **H2 Database** and `CrudRepository`.
->>>>>>> 4f3b7a3d1d83bec5b2a85d1a4cb9dd4d131383e7
+# Employee Address Management System
+This is a API project for insert, read, update, and delete Employees and Addresses using **`MySQL` Database** and `CrudRepository`.
 
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot "Spring Boot") ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white "Java") ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white "Postman") ![Google Chrome](https://img.shields.io/badge/Google%20Chrome-4285F4?style=for-the-badge&logo=GoogleChrome&logoColor=white "Google Chrome")
 
 ## Frameworks and Languages
-<<<<<<< HEAD
-
-![Java v17](https://img.shields.io/badge/Java-v17-green "Java 17") ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-v3.0.5-brightgreen "Spring Boot v3.0.5")
-=======
 ![Java v17](https://img.shields.io/badge/Java-v17-green "Java 17") ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-v3.0.6-brightgreen "Spring Boot v3.0.6")
->>>>>>> 4f3b7a3d1d83bec5b2a85d1a4cb9dd4d131383e7
-
 ---
 
 ## Browser / Tools
@@ -25,7 +13,7 @@ This is a API project for insert, read, update, and delete Jobs using **H2 Datab
 
 ## Model
 
-- ### Job Properties
+- ### Employee Properties
   - ```java
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -160,7 +148,7 @@ This is a API project for insert, read, update, and delete Jobs using **H2 Datab
   ```
 
 - ### Database
-  In this project for datasource I've used **H2 Database**'s in memory type with `SpringDataJPA`.
+  In this project for datasource I've used **`MySQL` Database**'s in memory type with `SpringDataJPA`.
 
 ---
 
@@ -172,4 +160,4 @@ This is a API project for insert, read, update, and delete Jobs using **H2 Datab
 
 ## Summary
 
-This API is a `Spring Boot` project that is about managing jobs. We can create, read, update, and delete jobs. In this project request is sent from the client on HTTP in JSON format or from path variable with server side validations and stored in object then response is sent back from the server by JSON format to the client.
+This API is a `Spring Boot` project that is about managing Employees and Addresses. We can create, read, update, and delete Employees and Addresses. In this project request is sent from the client on HTTP in JSON format or from path variable with server side validations and stored in object then response is sent back from the server by JSON format to the client.
