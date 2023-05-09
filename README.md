@@ -16,148 +16,114 @@ This is a API project for insert, read, update, and delete Employees and Address
 - ### Employee Properties
   - ```java
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     ```
   - ```java
-    @NotEmpty
-    private String title;
+    private String firstName;
     ```
   - ```java
-    private String description;
+    private String lastName;
     ```
   - ```java
-    @NotEmpty
-    private String location;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Address address;
+    ```
+- ### Address Properties
+  - ```java
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     ```
   - ```java
-    private Double salary;
+    private String street;
     ```
   - ```java
-    @NotEmpty
-    private String companyName;
+    private String City;
     ```
   - ```java
-    private String employerName;
+    private String state;
     ```
   - ```java
-    @Enumerated(value = EnumType.STRING)
-    private JobType jobType;
+    private String zipcode;
     ```
   - ```java
-    private LocalDate appliedDate;
+    @OneToOne(mappedBy = "address", cascade = CascadeType.REMOVE)
+    private Employee employee;
     ```
-- ### JobType Enum
-  ```java
-  public enum JobType {
-    IT,
-    HR,
-    SALES,
-    MARKETING,
-    ACCOUNTANT,
-    PLANNER
-  }
-  ```
-
 ---
 
 ## Dataflow
 
 - ### End Points / Controllers
-  - _Using CrudRepository Methods_
-    - `@PostMapping(value = "jobs")`
-    - `@GetMapping(value = "jobs")`
-    - `@PutMapping(value = "job")`
-    - `@DeleteMapping(value = "job/{id}")`
-  - _Using Custom Finder Methods_
-    - `@GetMapping(value = "jobs/{salary}")`
-    - `@GetMapping(value = "jobs/salary/greater/{salary}/sort/desc/appliedDate")`
-    - `@GetMapping(value = "/jobs/description/contain/{str}")`
-    - `@GetMapping(value = "jobs/jobType/not/{myType}")`
-  - _Using Native Query Methods_
-    - `@PutMapping(value = "jobs/location/{location}/id/{id}")`
-    - `@DeleteMapping(value = "job/native/{id}")`
-    - `@GetMapping(value = "jobs/title/{title}")`
-    - `@GetMapping(value = "jobs/description/{description}")`
+  - _Employee_
+    - `@GetMapping(value = "/")`
+    - `@GetMapping(value = "/{id}")`
+    - `@PostMapping(value = "/")`
+    - `@PutMapping(value = "/{id}")`
+    - `@DeleteMapping(value = "/{id}")`
+  - _Address_
+    - `@GetMapping(value = "/")`
+    - `@GetMapping(value = "/{id}")`
+    - `@PostMapping(value = "/")`
+    - `@PutMapping(value = "/{id}")`
+    - `@DeleteMapping("/{id}")`
 - ### Services
-  - _Using CrudRepository Methods_
+  - _Employee_
     ```java
-    public String addJobsToDb(List<Job> jobs)
+    public List<Employee> getAllEmployees()
     ```
     ```java
-    public List<Job> getJobsFromDb()
+    public Employee getEmployeeById(Long id)
     ```
     ```java
-    public String updateJobById(Job updatedJob)
+    public String addEmployee(Employee employee)
     ```
     ```java
-    public String deleteJobByIdFromDb(Long id)
-    ```
-  - _Using Custom Finder Methods_
-    ```java
-    public List<Job> getJobBySalaryFromDb(Double salary)
+    public String updateEmployee(Long id, Employee employee)
     ```
     ```java
-    public List<Job> getJobsBySalaryGreaterDescAppliedDate(Double salary)
+    public String deleteEmployee(Long id)
+    ```
+  - _Address_
+    ```java
+    public List<Address> getAllAddresses()
+    ```java
+    public Address getAddressById(Long id)
     ```
     ```java
-    public List<Job> getJobsDescriptionHaving(String str)
+    public String addAddress(Address address)
     ```
     ```java
-    public List<Job> getJobsByJobTypeNot(JobType jobType)
-    ```
-  - _Using Native Query Methods_
-    ```java
-    @Transactional
-    public String updateLocationById(String location, Long id)
+    public String updateAddress(Long id, Address address)
     ```
     ```java
-    @Transactional
-    public String deleteByIdNative(Long id)
-    ```
-    ```java
-    public List<Job> getAllJobsByTitle(String title)
-    ```
-    ```java
-    public List<Job> getAllJobsByDescription(String description)
+    public String deleteAddress(Long id)
     ```
 - ### Repository
-
-  ```java
-  @Repository
-  public interface IJobRepository extends CrudRepository<Job, Long> {
-
-    // Custom Finder Methods -->>
-    public List<Job> findBySalary(Double salary);
-    public List<Job> findBySalaryGreaterThanOrderByAppliedDateDesc(Double salary);
-    public List<Job> findByDescriptionContains(String str);
-    public List<Job> findByJobTypeNot(JobType jobType);
-
-    // Native Custom Query -->>
-    @Modifying
-    @Query(value = "update jobs set location = :location where id = :id", nativeQuery = true)
-    public void updateLocationById(Long id, String location);
-    @Modifying
-    @Query(value = "delete from jobs where id = :id", nativeQuery = true)
-    public void deleteJobById(Long id);
-    @Query(value = "select * from jobs where title = :title", nativeQuery = true)
-    public List<Job> selectJobByTitle(String title);
-    @Query(value = "select * from jobs where description = :description", nativeQuery = true)
-    public List<Job> selectJobByDescription(String description);
-  }
-  ```
-
+  - _Employee_
+    ```java
+    @Repository
+    public interface IEmployeeRepository extends CrudRepository<Employee, Long> {
+    }
+    ```
+  - _Address_
+    ```java
+    @Repository
+    public interface IAddressRepository extends CrudRepository<Address, Long> {
+    }
+    ```
 - ### Database
-  In this project for datasource I've used **`MySQL` Database**'s in memory type with `SpringDataJPA`.
+  In this project for datasource I've used **`MySQL` Database** with `SpringDataJPA`.
 
 ---
 
 ## Datastructures
 
-- `List<>`/`Inumrable<>`
+- `List<>`/`Iterable<>`
 
 ---
 
 ## Summary
 
-This API is a `Spring Boot` project that is about managing Employees and Addresses. We can create, read, update, and delete Employees and Addresses. In this project request is sent from the client on HTTP in JSON format or from path variable with server side validations and stored in object then response is sent back from the server by JSON format to the client.
+This API is a `Spring Boot` project that is about managing Employees and Addresses. We can create, read, update, and delete Employees and Addresses. In this project request is sent from the client on HTTP in JSON format or from path variable and stored in object then response is sent back from the server by JSON format to the client.
